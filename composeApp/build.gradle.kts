@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -41,6 +43,16 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+//Room
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
+
+            //common viewmodel
+            implementation(libs.lifecycle.viewmodel.compose)
+////
+////            //navigation
+            implementation(libs.androidx.navigation.compose)
         }
     }
 }
@@ -80,5 +92,17 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+
+dependencies {
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation(libs.androidx.room.common)
+    // Room
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
