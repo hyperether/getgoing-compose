@@ -1,4 +1,4 @@
-package com.hyperether.getgoing_kmp.di
+package kmp.di
 
 import android.app.Application
 import androidx.room.Room
