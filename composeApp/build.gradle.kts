@@ -44,8 +44,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-//Room
-            implementation(libs.androidx.room.runtime)
+            implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
 
             //common viewmodel
@@ -95,14 +94,17 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.android)
-    implementation(libs.androidx.room.common)
-    // Room
-    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    afterEvaluate {
+        add("kspIosSimulatorArm64", libs.room.compiler)
+        add("kspIosX64", libs.room.compiler)
+        add("kspIosArm64", libs.room.compiler)
+    }
 }
 
 room {
     schemaDirectory("$projectDir/schemas")
 }
+
+
 
