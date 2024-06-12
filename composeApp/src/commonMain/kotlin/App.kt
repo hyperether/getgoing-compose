@@ -1,28 +1,29 @@
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.compose.rememberNavController
+import di.DependencyProvider
 import kmp.repository.GgRepositoryImpl
+import kmp.repository.room.Route
+import kmp.repository.room.RouteAddedCallback
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import presentation.navigation.NavGraph
 
 @Composable
 @Preview
 fun App(repository: GgRepositoryImpl) {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
+    DependencyProvider.repository = repository
+    LaunchedEffect(true) {
+        repository.insertRoute(
+            Route(0, 350, 400.0, 1000.0, "05.04.2024. 09:26:45", 0.0, 0.0, 2, 2000),
+            object : RouteAddedCallback {
+                override fun onRouteAdded(id: Long) {
 
-        }
+                }
+            })
+    }
+
+    MaterialTheme {
+        NavGraph(rememberNavController())
     }
 }
